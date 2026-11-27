@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kazakhstan Travel — Частные туры и джип-экспедиции из Алматы с 2011 года</title>
+  <meta name="description" content="Индивидуальные путешествия и джип-туры 4×4 из Алматы: Чарынский каньон, озёра Кольсай и Каинды, национальный парк Алтын-Эмель, плато Ассы и Большое Алматинское озеро." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&family=Teko:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="route-progress-bar" id="route-progress-bar" aria-hidden="true"></div>
+
+  <!-- ====================================================================
+       STICKY EDITORIAL HEADER (Exact match to Kazakhstan Travel UI mockup)
+       ==================================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#home" class="brand-mark" onclick="KZApp.go('home'); return false;" aria-label="Kazakhstan Travel — На главную">
+        <span class="brand-word-top">KAZAKHSTAN</span>
+        <span class="brand-word-sub">TRAVEL</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Основная навигация">
+        <button class="nav-item" data-nav="routes" data-i18n="navRoutes" onclick="KZApp.go('routes')">Маршруты</button>
+        <button class="nav-item" data-nav="services" data-i18n="navServices" onclick="KZApp.go('services')">Услуги</button>
+        <button class="nav-item" data-nav="about" data-i18n="navAbout" onclick="KZApp.go('about')">О компании</button>
+        <button class="nav-item" data-nav="reviews" data-i18n="navReviews" onclick="KZApp.go('reviews')">Отзывы</button>
+        <button class="nav-item" data-nav="contacts" data-i18n="navContacts" onclick="KZApp.go('contacts')">Контакты</button>
+      </nav>
+
+      <div class="header-actions">
+        <div class="header-curr-pill" id="header-curr-mount" aria-label="Выбор валюты"></div>
+
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button class="lang-btn is-active" id="lang-ru" onclick="KZApp.setLang('ru')">RU</button>
+          <span>/</span>
+          <button class="lang-btn" id="lang-en" onclick="KZApp.setLang('en')">EN</button>
+        </div>
+
+        <a class="btn-outline-pill" id="header-wa-btn" href="https://wa.me/77775259885" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="navWhatsapp">Написать в WhatsApp</span>
+        </a>
+
+        <button class="mobile-menu-btn" id="mobile-menu-toggle" onclick="KZApp.toggleMobileMenu()" aria-label="Меню">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <button class="nav-item" data-i18n="navRoutes" onclick="KZApp.go('routes')">Маршруты</button>
+    <button class="nav-item" data-i18n="navServices" onclick="KZApp.go('services')">Услуги</button>
+    <button class="nav-item" data-i18n="navAbout" onclick="KZApp.go('about')">О компании</button>
+    <button class="nav-item" data-i18n="footerGallery" onclick="KZApp.go('gallery')">Фотогалерея</button>
+    <button class="nav-item" data-i18n="navReviews" onclick="KZApp.go('reviews')">Отзывы</button>
+    <button class="nav-item" data-i18n="navContacts" onclick="KZApp.go('contacts')">Контакты</button>
+    <div class="currency-toggle" data-currency-switcher style="width: fit-content; margin-top: 4px;"></div>
+    <a class="btn-pistachio" href="https://wa.me/77775259885" target="_blank" rel="noopener noreferrer" style="margin-top: 12px;">
+      <span data-i18n="navWhatsapp">Написать в WhatsApp</span>
+    </a>
+  </div>
+
+  <!-- ====================================================================
+       VIEW 1: HOME (Главная — 1:1 to UI Mockup + Interactive Controls)
+       ==================================================================== -->
+  <main id="view-home" class="app-view is-active">
+
+    <!-- 1. Hero Scene (Lake Kaindy) -->
+    <section class="hero-section">
+      <div class="hero-media-wrap">
+        <div class="hero-bg">
+          <img src="assets/hero-kaindy.jpg" alt="Затопленный еловый лес на озере Каинды в горах Тянь-Шаня, Казахстан" fetchpriority="high" />
+        </div>
+
+        <div class="container hero-content">
+          <p class="eyebrow hero-eyebrow" data-i18n="heroEyebrow">ЧАСТНЫЕ ТУРЫ ИЗ АЛМАТЫ · С 2011 ГОДА</p>
+          <h1 class="hero-headline">
+            <span data-i18n="heroTitle1">Казахстан.</span><br />
+            <span data-i18n="heroTitle2">Ближе, чем кажется.</span>
+          </h1>
+          <p class="hero-sub" data-i18n="heroSub">
+            Озёра, каньоны и горные дороги — только ваша компания, внедорожник 4×4 и опытный гид.
+          </p>
+        </div>
+      </div>
+
+      <!-- Horizon-straddling Button & GPS Telemetry -->
+      <div class="container hero-horizon-bar">
+        <div class="hero-horizon-inner">
+          <button class="btn-pistachio hero-cta-btn" onclick="KZApp.go('routes')">
+            <span data-i18n="heroBtn">Выбрать путешествие</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+          </button>
+
+          <div class="hero-coords">
+            <div class="hero-coords-gps">43°06′ N &nbsp;78°28′ E</div>
+            <div data-i18n="heroCoordPlace">Озеро Каинды, Казахстан</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Interactive Trip Finder Bar -->
+    <section class="finder-section reveal-on-scroll">
+      <div class="container">
+        <div class="finder-panel">
+          <div class="finder-top-row">
+            <h2 class="finder-heading" data-i18n="finderTitle">Ваше путешествие начинается здесь</h2>
+            <div class="finder-currency-wrap">
+              <span class="finder-curr-lbl" data-i18n="finderCurrencyLbl">Валюта расчёта</span>
+              <div class="currency-toggle" data-currency-switcher></div>
+            </div>
+          </div>
+
+          <div class="finder-grid">
+            <!-- Destination Custom Select -->
+            <div class="custom-select" id="select-dest">
+              <span class="custom-select-label" data-i18n="finderCol1Label">КУДА ХОТИТЕ ПОЕХАТЬ?</span>
+              <button type="button" class="custom-select-trigger" onclick="KZApp.toggleSelect('dest', event)">
+                <span id="select-dest-val" data-i18n="finderDestAll">Выберите маршрут</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="18 13 12 19 6 13"></polyline></svg>
+              </button>
+              <div class="custom-select-menu" id="menu-dest"></div>
+            </div>
+
+            <!-- Duration Custom Select -->
+            <div class="custom-select" id="select-dur">
+              <span class="custom-select-label" data-i18n="finderCol2Label">ПРОДОЛЖИТЕЛЬНОСТЬ</span>
+              <button type="button" class="custom-select-trigger" onclick="KZApp.toggleSelect('dur', event)">
+                <span id="select-dur-val" data-i18n="finderDurAll">1–6 дней</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="18 13 12 19 6 13"></polyline></svg>
+              </button>
+              <div class="custom-select-menu" id="menu-dur"></div>
+            </div>
+
+            <!-- Guests Custom Select -->
+            <div class="custom-select" id="select-guests">
+              <span class="custom-select-label" data-i18n="finderCol3Label">ВАША КОМПАНИЯ</span>
+              <button type="button" class="custom-select-trigger" onclick="KZApp.toggleSelect('guests', event)">
+                <span id="select-guests-val" data-i18n="finderGuestsAll">Количество гостей</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="18 13 12 19 6 13"></polyline></svg>
+              </button>
+              <div class="custom-select-menu" id="menu-guests"></div>
+            </div>
+
+            <button type="button" class="btn-pistachio" onclick="KZApp.submitFinder()">
+              <span data-i18n="finderSubmit">Подобрать</span>
+              <svg class="icon-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+            </button>
+          </div>
+          <div class="finder-live-preview" id="finder-live-preview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Philosophy Split & Stats -->
+    <section class="philosophy-section reveal-on-scroll">
+      <div class="container">
+        <div class="philosophy-inner">
+          <div class="philosophy-grid">
+            <div>
+              <p class="eyebrow" data-i18n="aboutEyebrow">НЕ НА ПОТОК. А ДЛЯ ВАС.</p>
+              <h2 class="philosophy-title" data-i18n="aboutTitle">Свобода ехать
+в своём ритме</h2>
+            </div>
+
+            <div>
+              <p class="philosophy-copy" data-i18n="aboutText">
+                Без сборных автобусов и спешки. Мы заберём вас из отеля в Алматы и покажем места, ради которых хочется свернуть с привычного пути.
+              </p>
+
+              <div class="stats-row">
+                <div>
+                  <div class="stat-value" data-i18n="stat1Val">с 2011</div>
+                  <div class="stat-label" data-i18n="stat1Lbl">организуем поездки</div>
+                </div>
+                <div>
+                  <div class="stat-value" data-i18n="stat2Val">700–1000</div>
+                  <div class="stat-label" data-i18n="stat2Lbl">гостей в год</div>
+                </div>
+                <div>
+                  <div class="stat-value" data-i18n="stat3Val">4×4</div>
+                  <div class="stat-label" data-i18n="stat3Lbl">частные внедорожники</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Signature Capsule Trio (Куда отправимся?) -->
+    <section class="destinations-section reveal-on-scroll">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="section-title-serif" data-i18n="whereTitle">Куда отправимся?</h2>
+          <p class="section-sub" data-i18n="whereSub">Три разных пейзажа. Тысячи новых впечатлений.</p>
+        </div>
+
+        <div class="capsule-trio" id="home-capsule-trio"></div>
+
+        <div class="section-footer-action">
+          <button class="btn-outline-pill" onclick="KZApp.go('routes')">
+            <span data-i18n="viewAllRoutes">Смотреть все 9 маршрутов и экспедиций</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="13 6 19 12 13 18"></polyline></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Five-Column Inclusions Card (Всё важное — уже с вами) -->
+    <section class="inclusions-section reveal-on-scroll">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="section-title-serif" data-i18n="incTitle">Всё важное — уже с вами</h2>
+          <p class="section-sub" data-i18n="incSub">Продуманные детали для спокойного путешествия</p>
+        </div>
+
+        <div class="inclusions-panel" id="home-inclusions-panel"></div>
+
+        <p class="inclusions-note" data-i18n="incNote">
+          Питание и проживание — отдельно или пакетом All inclusive. Стоимость рассчитаем под ваши даты и группу.
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. Full-Bleed Bespoke Story Banner (Не просто поездка. Ваша история.) -->
+    <section class="story-banner reveal-on-scroll">
+      <div class="story-banner-bg">
+        <img src="assets/story-4x4-fleet.jpg" alt="Подготовленные внедорожники 4×4 Kazakhstan Travel на краю каньона" loading="lazy" />
+      </div>
+
+      <div class="story-banner-content">
+        <p class="eyebrow" style="color: #D2D8C5;" data-i18n="storyEyebrow">ВАША КОМПАНИЯ. ВАШ МАРШРУТ.</p>
+        <h2 class="story-title">
+          <span data-i18n="storyTitle1">Не просто поездка.</span><br />
+          <span data-i18n="storyTitle2">Ваша история.</span>
+        </h2>
+        <p class="story-sub" data-i18n="storySub">Изменим программу под ваши интересы и темп.
+Никаких случайных попутчиков — только свои.</p>
+
+        <button class="btn-pistachio" onclick="KZApp.openModal()">
+          <span data-i18n="storyBtn">Обсудить маршрут</span>
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="8 7 17 7 17 16"></polyline></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- 7. Google Reviews Editorial Block (Из поездок — с впечатлениями) -->
+    <section class="reviews-section reveal-on-scroll">
+      <div class="container">
+        <div class="reviews-wrap">
+          <h2 class="section-title-serif" data-i18n="revTitle">Из поездок — с впечатлениями</h2>
+
+          <div class="reviews-meta-row">
+            <span class="eyebrow" data-i18n="revEyebrow">GOOGLE ОТЗЫВЫ</span>
+
+            <div class="reviews-actions-right">
+              <div class="reviews-pager" aria-label="Листать отзывы">
+                <button class="pager-btn" onclick="KZApp.stepReviews(-1)" aria-label="Предыдущие отзывы">
+                  <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                <button class="pager-btn" onclick="KZApp.stepReviews(1)" aria-label="Следующие отзывы">
+                  <svg class="icon-svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </div>
+
+              <a class="text-link-arrow" href="https://www.google.com/maps/search/Kazakhstan+Travel+Almaty" target="_blank" rel="noopener noreferrer">
+                <span data-i18n="revAllGoogle">Все отзывы в Google</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="8 7 17 7 17 16"></polyline></svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="reviews-two-col" id="home-reviews-pair"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Bottom WhatsApp CTA Card (Начнём с вашего желания?) -->
+    <section class="cta-card-section reveal-on-scroll">
+      <div class="container">
+        <div class="cta-panel">
+          <div>
+            <h2 class="section-title-serif" style="font-size: clamp(32px, 3.3vw, 44px);" data-i18n="ctaTitle">
+              Начнём с вашего желания?
+            </h2>
+            <p class="cta-panel-sub" data-i18n="ctaSub">Напишите даты, количество гостей и места, которые хотите увидеть.
+Мы предложим маршрут и рассчитаем стоимость.</p>
+          </div>
+
+          <div class="cta-panel-actions">
+            <a class="btn-pistachio" id="bottom-wa-btn" href="https://wa.me/77775259885" target="_blank" rel="noopener noreferrer">
+              <span data-i18n="ctaBtn">Написать в WhatsApp</span>
+              <svg class="icon-svg" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="8 7 17 7 17 16"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================================
+       VIEW 2: ROUTES CATALOG (Маршруты — все 9 направлений + фильтры)
+       ==================================================================== -->
+  <section id="view-routes" class="app-view" aria-label="Каталог маршрутов">
+    <div class="inner-hero">
+      <div class="container inner-hero-wrap">
+        <p class="eyebrow" data-i18n="catalogEyebrow">КОЛЛЕКЦИЯ МАРШРУТОВ · СЕМИРЕЧЬЕ И ТЯНЬ-ШАНЬ</p>
+        <h1 class="inner-title" data-i18n="catalogTitle">Выберите направление своей поездки</h1>
+        <p class="inner-lead" data-i18n="catalogSub">
+          Любой маршрут адаптируется под ваши даты, состав семьи и желаемый уровень размещения — от уютных гостевых домов до панорамных глэмпингов и юрт.
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="filter-toolbar">
+        <div class="filter-pills" id="catalog-filter-pills"></div>
+
+        <div class="currency-toggle" data-currency-switcher role="group" aria-label="Валюта расчёта"></div>
+      </div>
+
+      <div id="finder-active-notice"></div>
+
+      <div class="catalog-grid" id="catalog-grid"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 3: ROUTE DETAIL + TOPOGRAPHIC PROFILE + LIVE CALCULATOR
+       ==================================================================== -->
+  <section id="view-route-detail" class="app-view" aria-label="Детали маршрута">
+    <div id="route-detail-mount"></div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 4: SERVICES (Услуги компании almaty-travel.kz)
+       ==================================================================== -->
+  <section id="view-services" class="app-view" aria-label="Услуги">
+    <div class="inner-hero">
+      <div class="container inner-hero-wrap">
+        <p class="eyebrow" data-i18n="servicesEyebrow">ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ ALMATY-TRAVEL.KZ</p>
+        <h1 class="inner-title" data-i18n="servicesTitle">Больше, чем поездка за город</h1>
+        <p class="inner-lead" data-i18n="servicesSub">
+          Берём на себя всю логистику вашего пребывания в Алматы и горах Казахстана.
+        </p>
+      </div>
+    </div>
+
+    <div class="container" style="padding-top: 56px; padding-bottom: 72px;">
+      <div class="services-grid" id="services-grid"></div>
+    </div>
+
+    <div class="inclusions-section">
+      <div class="container">
+        <div class="section-header-center">
+          <h2 class="section-title-serif" data-i18n="incTitle">Всё важное — уже с вами</h2>
+          <p class="section-sub" data-i18n="incSub">Продуманные детали для спокойного путешествия</p>
+        </div>
+        <div class="inclusions-panel" id="services-inclusions-panel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 5: ABOUT, 4x4 FLEET, PHOTO GALLERY & FAQ
+       ==================================================================== -->
+  <section id="view-about" class="app-view" aria-label="О компании и автопарк">
+    <div class="inner-hero">
+      <div class="container inner-hero-wrap">
+        <p class="eyebrow" data-i18n="aboutPageEyebrow">KAZAKHSTAN TRAVEL · ЧАСТНЫЕ ЭКСПЕДИЦИИ С 2011 ГОДА</p>
+        <h1 class="inner-title" data-i18n="aboutPageTitle">Камерный подход к большому Казахстану</h1>
+        <p class="inner-lead" data-i18n="aboutPageLead">
+          Мы сознательно не делаем автобусные туры на 40 человек. Наша специализация — продуманные частные путешествия для семей, пар и небольших компаний друзей.
+        </p>
+      </div>
+    </div>
+
+    <!-- Fleet Section -->
+    <div class="container" style="padding-top: 64px; padding-bottom: 72px;">
+      <div class="section-header-center">
+        <p class="eyebrow" data-i18n="fleetEyebrow">ПОДГОТОВЛЕННЫЙ АВТОПАРК 4×4</p>
+        <h2 class="section-title-serif" style="margin-top: 10px;" data-i18n="fleetTitle">На чём мы отправляемся в горы и степь</h2>
+        <p class="section-sub" data-i18n="fleetSub">Каждая машина проходит технический осмотр перед выездом и укомплектована всем необходимым.</p>
+      </div>
+      <div class="fleet-grid" id="fleet-grid"></div>
+    </div>
+
+    <!-- Photo Gallery Anchor -->
+    <div id="gallery-anchor" class="container" style="padding-top: 24px; padding-bottom: 80px;">
+      <div class="section-header-center">
+        <p class="eyebrow" data-i18n="galleryEyebrow">ФОТОГАЛЕРЕЯ ЭКСПЕДИЦИЙ</p>
+        <h2 class="section-title-serif" style="margin-top: 10px;" data-i18n="galleryTitle">Кадры из наших поездок</h2>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container" style="padding-bottom: 96px;">
+      <div class="section-header-center">
+        <p class="eyebrow" data-i18n="faqEyebrow">ВАЖНЫЕ ДЕТАЛИ ПЕРЕД ВЫЕЗДОМ</p>
+        <h2 class="section-title-serif" style="margin-top: 10px;" data-i18n="faqTitle">Частые вопросы путешественников</h2>
+      </div>
+      <div class="faq-list" id="faq-list"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 6: REVIEWS (Отзывы гостей)
+       ==================================================================== -->
+  <section id="view-reviews" class="app-view" aria-label="Отзывы гостей">
+    <div class="inner-hero">
+      <div class="container inner-hero-wrap">
+        <p class="eyebrow" data-i18n="reviewsPageEyebrow">ОТЗЫВЫ ГОСТЕЙ · GOOGLE 4.9 ★</p>
+        <h1 class="inner-title" data-i18n="reviewsPageTitle">Из поездок — с впечатлениями</h1>
+        <p class="inner-lead" data-i18n="reviewsPageSub">
+          Нам доверяют путешественники из Казахстана, Европы, США, Ближнего Востока и Азии — многие возвращаются за новыми маршрутами в другой сезон.
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="reviews-full-grid" id="reviews-full-grid"></div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       VIEW 7: CONTACTS & BESPOKE ITINERARY BUILDER
+       ==================================================================== -->
+  <section id="view-contacts" class="app-view" aria-label="Контакты и конструктор маршрута">
+    <div class="inner-hero">
+      <div class="container inner-hero-wrap">
+        <p class="eyebrow" data-i18n="contactsEyebrow">СВЯЖИТЕСЬ С НАМИ · АЛМАТЫ</p>
+        <h1 class="inner-title" data-i18n="contactsTitle">Соберём маршрут под ваши даты</h1>
+        <p class="inner-lead" data-i18n="contactsSub">
+          Расскажите, сколько у вас свободных дней и что хочется почувствовать — тишину горных озёр, масштаб каньонов или закат в пустыне.
+        </p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="contacts-layout">
+        <div class="contact-info-stack" id="contact-cards-mount"></div>
+
+        <form class="builder-card" id="bespoke-builder-form" onsubmit="KZApp.handleBuilderSubmit(event)">
+          <div class="builder-head-row">
+            <h2 class="serif-display" style="font-size: 30px;" data-i18n="builderTitle">
+              Конструктор индивидуального маршрута
+            </h2>
+            <div class="currency-toggle" data-currency-switcher></div>
+          </div>
+
+          <label class="calc-label" data-i18n="builderLocationsLbl">ОТМЕТЬТЕ ЛОКАЦИИ, КОТОРЫЕ ИНТЕРЕСНЫ</label>
+          <div class="landmark-chips" id="builder-landmarks"></div>
+          <div id="builder-recommendation" style="margin-top: -12px; margin-bottom: 20px; font-size: 13px; color: var(--accent);"></div>
+
+          <div class="form-two-col">
+            <div>
+              <label class="calc-label" for="b-name" data-i18n="builderNameLbl">ВАШЕ ИМЯ</label>
+              <input class="field-input" id="b-name" type="text" required placeholder="Александр / Alex" />
+            </div>
+            <div>
+              <label class="calc-label" for="b-phone" data-i18n="builderPhoneLbl">ТЕЛЕФОН ИЛИ WHATSAPP</label>
+              <input class="field-input" id="b-phone" type="tel" required placeholder="+7 777 000 00 00" />
+            </div>
+          </div>
+
+          <div class="form-two-col">
+            <div>
+              <label class="calc-label" for="b-dates" data-i18n="builderDatesLbl">ДАТЫ И КОЛИЧЕСТВО ДНЕЙ</label>
+              <input class="field-input" id="b-dates" type="text" placeholder="12–15 июня · 4 дня" />
+            </div>
+            <div>
+              <label class="calc-label" for="b-guests" data-i18n="builderGuestsLbl">КОЛИЧЕСТВО ГОСТЕЙ</label>
+              <input class="field-input" id="b-guests" type="text" value="2–4" />
+            </div>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <label class="calc-label" for="b-notes" data-i18n="builderNotesLbl">ПОЖЕЛАНИЯ (ОТЕЛИ, ДЕТИ, ТЕМП, ЯЗЫК ГИДА)</label>
+            <textarea class="field-input" id="b-notes" rows="3" placeholder="Например: ночёвка в панорамном глэмпинге на Кольсае, спокойный темп для фото"></textarea>
+          </div>
+
+          <div class="calc-actions">
+            <button type="button" class="btn-pistachio" onclick="KZApp.sendBuilderToWhatsApp()">
+              <span data-i18n="builderSubmitWa">Сформировать и открыть в WhatsApp</span>
+              <svg class="icon-svg" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="8 7 17 7 17 16"></polyline></svg>
+            </button>
+            <button type="submit" class="btn-outline-pill">
+              <span data-i18n="builderSubmitSite">Сохранить заявку и получить расчёт</span>
+            </button>
+          </div>
+          <div id="builder-saved-msg" style="display:none; margin-top: 16px; padding: 14px; border-radius: 12px; background: rgba(116,184,146,0.14); border: 1px solid rgba(116,184,146,0.35); color: #A6E0BE; font-size: 13.5px;"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       GLOBAL FOOTER (Exact 3-column layout from slice_4.png)
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-cols">
+          <div>
+            <a href="#home" class="brand-mark brand-mark--large" onclick="KZApp.go('home'); return false;">
+              <span class="brand-word-top">KAZAKHSTAN</span>
+              <span class="brand-word-sub">TRAVEL</span>
+            </a>
+            <p class="footer-tagline" data-i18n="footerTagline">Частные путешествия
+из Алматы с 2011 года.</p>
+          </div>
+
+          <div>
+            <p class="eyebrow" data-i18n="footerColExplore">ИССЛЕДУЙТЕ</p>
+            <div class="footer-links">
+              <button class="footer-link" data-i18n="navRoutes" onclick="KZApp.go('routes')">Маршруты</button>
+              <button class="footer-link" data-i18n="navServices" onclick="KZApp.go('services')">Услуги</button>
+              <button class="footer-link" data-i18n="navAbout" onclick="KZApp.go('about')">О компании</button>
+              <button class="footer-link" data-i18n="footerGallery" onclick="KZApp.go('gallery')">Фотогалерея</button>
+            </div>
+          </div>
+
+          <div>
+            <p class="eyebrow" data-i18n="footerColContact">СВЯЖИТЕСЬ С НАМИ</p>
+            <div class="footer-links">
+              <a class="footer-link tabular" href="https://wa.me/77775259885" target="_blank" rel="noopener noreferrer">+7 777 525 98 85</a>
+              <a class="footer-link" href="mailto:kztravel@mail.ru">kztravel@mail.ru</a>
+              <a class="footer-link" href="https://instagram.com/kazakhstan_travel" target="_blank" rel="noopener noreferrer">@kazakhstan_travel</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>2011–2026 © Kazakhstan Travel</span>
+          <button class="footer-link" style="font-size: 12.5px; color: var(--text-muted);" data-i18n="footerOffer" onclick="KZApp.openOfferModal()">
+            Публичная оферта
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       QUICK CONSULTATION / BOOKING MODAL & PUBLIC OFFER MODAL & LIGHTBOX
+       ==================================================================== -->
+  <div class="modal-backdrop" id="booking-modal" onclick="KZApp.closeModalsOnBackdrop(event)">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+      <button class="modal-close" onclick="KZApp.closeModals()" aria-label="Закрыть">&times;</button>
+      <div id="booking-modal-body"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="lightbox-modal" onclick="KZApp.closeModalsOnBackdrop(event)">
+    <div class="lightbox-dialog" role="dialog" aria-modal="true">
+      <img id="lightbox-img" src="" alt="" />
+      <div class="lightbox-bar">
+        <div id="lightbox-caption"></div>
+        <div style="display:flex; gap:8px;">
+          <button class="pager-btn" onclick="KZApp.stepLightbox(-1)" aria-label="Назад">&#8592;</button>
+          <button class="pager-btn" onclick="KZApp.stepLightbox(1)" aria-label="Вперёд">&#8594;</button>
+          <button class="pager-btn" onclick="KZApp.closeModals()" aria-label="Закрыть">&times;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
